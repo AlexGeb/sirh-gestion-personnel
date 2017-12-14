@@ -1,11 +1,8 @@
 package dev.sgp.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -18,29 +15,24 @@ import dev.sgp.service.CollaborateurService;
 import dev.sgp.util.Constantes;
 import dev.sgp.util.FormValidator;
 
-public class EditerCollaborateurController extends HttpServlet {
+public class NouveauCollaborateurController extends HttpServlet {
 	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String matricule = req.getParameter("matricule");
-		Collaborateur collab = collabService.queryByMatricule(matricule).orElse(null);
-		if (collab == null || matricule == null) {
-			resp.sendError(400, "Matricule inconnu ou non spécifié");
-		} else {
-			req.setAttribute("collaborateur", collab);
-			req.getRequestDispatcher("/WEB-INF/views/collab/editerCollaborateur.jsp").forward(req, resp);
-		}
+		req.getRequestDispatcher("/WEB-INF/views/collab/nouveauCollaborateur.jsp").forward(req, resp);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		FormValidator validator = new FormValidator();
 		List<String> itemManquants = validator.validate(req);
 		Map<String, String> keyValue = validator.getFormData();
 		if (itemManquants.isEmpty()) {
-			String matricule = req.getParameter("matricule");
-			collabService.modifyCollaborateur(matricule, keyValue);
+			Collaborateur collab = collabService.newCollabFromHashMap(keyValue);
+			collabService.sauvegarderCollaborateur(collab);
+			System.out.println(
+					"Creation d’un collaborateur avec les informations suivantes :" + validator.formatFormData());
 			resp.setStatus(201);
 			resp.sendRedirect(req.getContextPath() + "/collaborateurs/lister");
 		} else {

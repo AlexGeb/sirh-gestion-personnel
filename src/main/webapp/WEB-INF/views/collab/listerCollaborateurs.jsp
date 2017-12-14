@@ -4,9 +4,9 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<%@include file="../header.jsp"%>
+<%@include file="../includes/header.jsp"%>
 <body>
-	<%@include file="../navbar.jsp"%>
+	<%@include file="../includes/navbar.jsp"%>
 	<div class="container-fluid">
 		<h1>Les collaborateurs</h1>
 
@@ -76,8 +76,8 @@
 							</div>
 						</div>
 						<div class="card-footer text-muted">
-							<a href="<c:url value='editer?matricule=${collab.matricule}'/>" class="btn btn-primary"
-								role="button">Modifier</a>
+							<a href="<c:url value='editer?matricule=${collab.matricule}'/>"
+								class="btn btn-primary" role="button">Modifier</a>
 						</div>
 					</div>
 				</div>

@@ -28,6 +28,7 @@ public class Collaborateur {
 	public Collaborateur() {
 		this.actif = true;
 		this.dateHeureCreation = ZonedDateTime.now();
+		this.intitulePoste = "employé";
 		this.photo = "default-avatar.png";
 		// random generated matricule :
 		this.matricule = String.format("%x", (long) (Math.random() * LocalDate.now().toEpochDay())).toUpperCase();

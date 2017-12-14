@@ -17,9 +17,6 @@ import dev.sgp.util.Constantes;
 
 public class CollaborateurService {
 
-	public final List<String> KEYS = Arrays.asList("nom", "prenom", "date_naissance", "adresse", "num_secu_sociale");
-	public final List<String> OPTIONAL_KEYS = Arrays.asList("phone", "intitulePoste", "departement", "banque", "bic",
-			"iban");
 	private List<Collaborateur> listeCollaborateurs = new ArrayList<>();
 
 	private final String SOCIETE = Constantes.SOCIETE;
@@ -55,6 +52,35 @@ public class CollaborateurService {
 
 	public Collaborateur newCollabFromHashMap(Map<String, String> keyValue) {
 		Collaborateur collab = new Collaborateur();
+		return modifCollabFromHashMap(collab, keyValue);
+	}
+
+	public List<Collaborateur> queryByName(String recherche) {
+		return listeCollaborateurs.stream().filter(collab -> {
+			return collab.getPrenom().toLowerCase().startsWith(recherche.trim().toLowerCase())
+					|| collab.getNom().toLowerCase().startsWith(recherche.trim().toLowerCase());
+		}).collect(Collectors.toList());
+	}
+
+	public List<Collaborateur> queryByDept(String nom_dept) {
+		return listeCollaborateurs.stream().filter(collab -> {
+			return collab.getDepartement().getNom().equals(nom_dept.trim());
+		}).collect(Collectors.toList());
+	}
+
+	public Optional<Collaborateur> queryByMatricule(String matricule) {
+		return listeCollaborateurs.stream().filter(collab -> collab.getMatricule().equals(matricule)).findFirst();
+	}
+
+	public void modifyCollaborateur(String matricule, Map<String, String> keyValue) {
+		Optional<Collaborateur> collabOpt = queryByMatricule(matricule);
+		if (collabOpt.isPresent()) {
+			Collaborateur collab = collabOpt.get();
+			modifCollabFromHashMap(collab, keyValue);
+		}
+	}
+
+	public Collaborateur modifCollabFromHashMap(Collaborateur collab, Map<String, String> keyValue) {
 		// champs obligatoires
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		collab.setDate_naissance(LocalDate.parse(keyValue.get("date_naissance"), formatter));
@@ -86,23 +112,6 @@ public class CollaborateurService {
 			collab.setIban(keyValue.get("iban"));
 		}
 		return collab;
-	}
-
-	public List<Collaborateur> queryByName(String recherche) {
-		return listeCollaborateurs.stream().filter(collab -> {
-			return collab.getPrenom().toLowerCase().startsWith(recherche.trim().toLowerCase())
-					|| collab.getNom().toLowerCase().startsWith(recherche.trim().toLowerCase());
-		}).collect(Collectors.toList());
-	}
-
-	public List<Collaborateur> queryByDept(String nom_dept) {
-		return listeCollaborateurs.stream().filter(collab -> {
-			return collab.getDepartement().getNom().equals(nom_dept.trim());
-		}).collect(Collectors.toList());
-	}
-
-	public Optional<Collaborateur> queryByMatricule(String matricule) {
-		return listeCollaborateurs.stream().filter(collab -> collab.getMatricule().equals(matricule)).findFirst();
 	}
 
 }
