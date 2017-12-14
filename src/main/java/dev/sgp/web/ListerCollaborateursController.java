@@ -1,7 +1,6 @@
 package dev.sgp.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -17,12 +16,12 @@ import dev.sgp.util.Constantes;
 
 public class ListerCollaborateursController extends HttpServlet {
 
-	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
-	private DepartementService deptService = Constantes.DEPT_SERVICE;
+	private final CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	private final DepartementService deptService = Constantes.DEPT_SERVICE;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<Collaborateur> collaborateurs = new ArrayList<Collaborateur>();
+		List<Collaborateur> collaborateurs;
 		List<Departement> departements = deptService.getListeDepartements();
 		String selectedDept = "all";
 		String searchValue = null;
@@ -33,17 +32,17 @@ public class ListerCollaborateursController extends HttpServlet {
 		}
 
 		String recherche = req.getParameter("recherche");
-		String nom_dept = req.getParameter("departement");
+		String nomDept = req.getParameter("departement");
 
-		if (recherche != null && !recherche.equals("")) {
+		if (!"".equals(recherche)) {
 			// cas ou l'utiliasteur effectue une recherche par nom et prenom
 			searchValue = recherche;
 			collaborateurs = collabService.queryByName(recherche);
-		} else if (nom_dept != null && !nom_dept.equals("") && !nom_dept.equals("all")) {
+		} else if (!"".equals(nomDept) && !"all".equals(nomDept)) {
 			// cas ou l'utilisateur fait une recherche par departement (si all est
 			// selectionné, tous les collaborateurs sont renvoyés)
-			selectedDept = deptService.getDeptByName(nom_dept).getNom();
-			collaborateurs = collabService.queryByDept(nom_dept);
+			selectedDept = deptService.getDeptByName(nomDept).orElse(null).getNom();
+			collaborateurs = collabService.queryByDept(nomDept);
 		} else {
 			collaborateurs = collabService.listerCollaborateurs();
 		}
@@ -54,9 +53,5 @@ public class ListerCollaborateursController extends HttpServlet {
 		req.setAttribute("searchValue", searchValue);
 		
 		req.getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp").forward(req, resp);
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 	}
 }

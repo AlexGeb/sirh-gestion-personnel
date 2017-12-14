@@ -3,12 +3,9 @@ package dev.sgp.service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import dev.sgp.entite.Collaborateur;
@@ -99,8 +96,12 @@ public class CollaborateurService {
 			collab.setIntitulePoste(keyValue.get("intitulePoste"));
 		}
 		if (keyValue.containsKey("departement")) {
-			Departement dept = Constantes.DEPT_SERVICE.getDeptByName(keyValue.get("departement"));
-			collab.setDepartement(dept);
+			String deptname = keyValue.get("departement");
+			Optional<Departement> deptOpt = Constantes.DEPT_SERVICE.getDeptByName(deptname);
+			if(deptOpt.isPresent()) {
+				Departement dept = deptOpt.get();
+				collab.setDepartement(dept);
+			}
 		}
 		if (keyValue.containsKey("banque")) {
 			collab.setBanque(keyValue.get("banque"));

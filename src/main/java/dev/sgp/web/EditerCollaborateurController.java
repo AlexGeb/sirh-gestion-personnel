@@ -19,7 +19,7 @@ import dev.sgp.util.Constantes;
 import dev.sgp.util.FormValidator;
 
 public class EditerCollaborateurController extends HttpServlet {
-	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	private final CollaborateurService collabService = Constantes.COLLAB_SERVICE;
 	private static final Logger LOG = LoggerFactory.getLogger(EditerCollaborateurController.class);
 
 	@Override

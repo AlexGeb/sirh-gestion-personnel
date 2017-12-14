@@ -2,7 +2,7 @@ package dev.sgp.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import dev.sgp.entite.Departement;
 
@@ -25,8 +25,8 @@ public class DepartementService {
 		return listeDepartements;
 	}
 
-	public Departement getDeptByName(String nom_dept) {
+	public Optional<Departement> getDeptByName(String nom_dept) {
 		return listeDepartements.stream()
-				.filter((dept) -> nom_dept.trim().toLowerCase().equals(dept.getNom().trim().toLowerCase())).findFirst().get();
+				.filter((dept) -> nom_dept.trim().toLowerCase().equals(dept.getNom().trim().toLowerCase())).findFirst();
 	}
 }

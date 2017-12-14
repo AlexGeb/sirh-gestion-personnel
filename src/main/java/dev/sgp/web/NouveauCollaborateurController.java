@@ -16,7 +16,7 @@ import dev.sgp.util.Constantes;
 import dev.sgp.util.FormValidator;
 
 public class NouveauCollaborateurController extends HttpServlet {
-	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	private final CollaborateurService collabService = Constantes.COLLAB_SERVICE;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
