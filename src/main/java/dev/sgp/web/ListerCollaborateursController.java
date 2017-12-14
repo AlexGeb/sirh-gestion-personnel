@@ -2,6 +2,7 @@ package dev.sgp.web;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -41,7 +42,10 @@ public class ListerCollaborateursController extends HttpServlet {
 		} else if (!"".equals(nomDept) && !"all".equals(nomDept)) {
 			// cas ou l'utilisateur fait une recherche par departement (si all est
 			// selectionné, tous les collaborateurs sont renvoyés)
-			selectedDept = deptService.getDeptByName(nomDept).orElse(null).getNom();
+			Optional<Departement> optDept = deptService.getDeptByName(nomDept);
+			if(optDept.isPresent()) {
+				selectedDept = optDept.get().getNom();
+			}
 			collaborateurs = collabService.queryByDept(nomDept);
 		} else {
 			collaborateurs = collabService.listerCollaborateurs();

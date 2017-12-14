@@ -6,7 +6,7 @@ import java.util.List;
 import dev.sgp.entite.VisiteWeb;
 
 public class FrequentationService {
-	private List<VisiteWeb> visites = new ArrayList<VisiteWeb>();
+	private List<VisiteWeb> visites = new ArrayList<>();
 
 	public void addVisite(VisiteWeb visite) {
 		visites.add(visite);

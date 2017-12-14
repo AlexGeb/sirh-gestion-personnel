@@ -8,7 +8,7 @@ import dev.sgp.entite.Departement;
 
 public class DepartementService {
 
-	private List<Departement> listeDepartements = new ArrayList<Departement>();
+	private List<Departement> listeDepartements = new ArrayList<>();
 
 	public DepartementService() {
 		Departement compta = new Departement(1, "Comptabilite");

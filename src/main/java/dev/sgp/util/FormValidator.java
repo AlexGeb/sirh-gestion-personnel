@@ -14,14 +14,14 @@ public class FormValidator {
 	public final List<String> OPTIONAL_KEYS = Arrays.asList("phone", "intitulePoste", "departement", "banque", "bic",
 			"iban");
 
-	private Map<String, String> formData = new HashMap<String, String>();
+	private Map<String, String> formData = new HashMap<>();
 
 	public Map<String, String> getFormData() {
 		return formData;
 	}
 
 	public List<String> validate(HttpServletRequest req) {
-		List<String> erreurs = new ArrayList<String>();
+		List<String> erreurs = new ArrayList<>();
 		for (String key : KEYS) {
 			String value = req.getParameter(key);
 			if (value == null || value.equals("")) {
@@ -45,7 +45,7 @@ public class FormValidator {
 	}
 
 	private String getStrFromMap(Map<String, String> obj) {
-		List<String> msg = new ArrayList<String>();
+		List<String> msg = new ArrayList<>();
 		obj.forEach((key, val) -> {
 			StringBuilder strbuff = new StringBuilder();
 			strbuff.append(key).append(":").append(val);
