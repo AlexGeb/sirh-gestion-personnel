@@ -16,8 +16,6 @@ public class CollaborateurService {
 
 	private List<Collaborateur> listeCollaborateurs = new ArrayList<>();
 
-	private final String SOCIETE = Constantes.SOCIETE;
-
 	public List<Collaborateur> listerCollaborateurs() {
 		return listeCollaborateurs;
 	}
@@ -26,26 +24,6 @@ public class CollaborateurService {
 		listeCollaborateurs.add(collab);
 	}
 
-	public void _init(List<Departement> depts) {
-		Collaborateur collab1 = new Collaborateur("Doe", "John", LocalDate.now().minusYears(40),
-				"2 rue de la Paix, 75000 Paris", "123456789123456", "employé", depts.get(0));
-		Collaborateur collab2 = new Collaborateur("Brown", "Jackie", LocalDate.now().minusYears(35),
-				"2 rue de la Paix, 75000 Paris", "123456789123456", "employé", depts.get(1));
-		Collaborateur collab3 = new Collaborateur("Norris", "Chuck", LocalDate.now().minusYears(52),
-				"2 rue de la Paix, 75000 Paris", "123456789123456", "employé", depts.get(2));
-		Collaborateur collab4 = new Collaborateur("Pitt", "Brad", LocalDate.now().minusYears(40),
-				"2 rue de la Paix, 75000 Paris", "123456789123456", "employé", depts.get(2));
-		Collaborateur collab5 = new Collaborateur("Luke", "Lucky", LocalDate.now().minusYears(40),
-				"2 rue de la Paix, 75000 Paris", "123456789123456", "employé", depts.get(3));
-		Collaborateur collab6 = new Collaborateur("Jumper", "Joly", LocalDate.now().minusYears(40),
-				"2 rue de la Paix, 75000 Paris", "123456789123456", "employé", depts.get(0));
-		sauvegarderCollaborateur(collab1);
-		sauvegarderCollaborateur(collab2);
-		sauvegarderCollaborateur(collab3);
-		sauvegarderCollaborateur(collab4);
-		sauvegarderCollaborateur(collab5);
-		sauvegarderCollaborateur(collab6);
-	}
 
 	public Collaborateur newCollabFromHashMap(Map<String, String> keyValue) {
 		Collaborateur collab = new Collaborateur(keyValue.get("nom"), keyValue.get("prenom"));

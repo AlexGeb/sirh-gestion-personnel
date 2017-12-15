@@ -22,10 +22,15 @@ public class FormValidator {
 
 	public List<String> validate(HttpServletRequest req) {
 		List<String> erreurs = new ArrayList<>();
+		// champs obligatoires
 		for (String key : KEYS) {
 			String value = req.getParameter(key);
 			if (value == null || value.equals("")) {
 				erreurs.add(key);
+			} else if (key.equals("num_secu_sociale")) {
+				if (value.length() != 15) {
+					erreurs.add(key);
+				}
 			} else {
 				formData.put(key, value);
 			}

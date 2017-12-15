@@ -30,11 +30,6 @@ public class ListerCollaborateursController extends HttpServlet {
 		String selectedDept = "all";
 		String searchValue = null;
 
-		/** Little hack to init a list of collaborateurs : */
-		if (collabService.listerCollaborateurs().isEmpty()) {
-			collabService._init(departements);
-		}
-
 		String recherche = req.getParameter("recherche");
 		String nomDept = req.getParameter("departement");
 

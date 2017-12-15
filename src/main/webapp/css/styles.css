@@ -1,0 +1,4 @@
+.card-body.row .col-9 + .col-3 {
+  padding-right: 3px;
+  padding-left: 3px;
+}

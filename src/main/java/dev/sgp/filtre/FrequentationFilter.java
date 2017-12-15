@@ -40,7 +40,7 @@ public class FrequentationFilter implements Filter {
 		long after = System.currentTimeMillis();
 		String path = ((HttpServletRequest) req).getRequestURI();
 		int tempsExecution =  (int) (after - before);
-		LOG.debug(path + " : " + tempsExecution);
+		LOG.debug(path + " : " + tempsExecution + "ms");
 		VisiteWeb visite = new VisiteWeb(0, path, tempsExecution);
 		freqService.addVisite(visite);
 	}

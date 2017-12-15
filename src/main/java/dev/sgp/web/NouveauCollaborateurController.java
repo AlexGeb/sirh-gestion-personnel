@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import dev.sgp.entite.Collaborateur;
 import dev.sgp.service.CollaborateurService;
 import dev.sgp.util.Constantes;
@@ -19,6 +22,7 @@ import dev.sgp.util.FormValidator;
 @WebServlet(urlPatterns = { "/collaborateurs/nouveau" })
 public class NouveauCollaborateurController extends HttpServlet {
 	private final CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	private static final Logger LOG = LoggerFactory.getLogger(NouveauCollaborateurController.class);
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,8 +37,7 @@ public class NouveauCollaborateurController extends HttpServlet {
 		if (itemManquants.isEmpty()) {
 			Collaborateur collab = collabService.newCollabFromHashMap(keyValue);
 			collabService.sauvegarderCollaborateur(collab);
-			System.out.println(
-					"Creation d’un collaborateur avec les informations suivantes :" + validator.formatFormData());
+			LOG.debug("Creation d’un collaborateur avec les informations suivantes :" + validator.formatFormData());
 			resp.setStatus(201);
 			resp.sendRedirect(req.getContextPath() + "/collaborateurs/lister");
 		} else {
