@@ -9,6 +9,16 @@
 	<url>http://maven.apache.org</url>
 	<build>
 		<finalName>sgp</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<configuration>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 	<properties>
@@ -49,7 +59,7 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.2.2</version>
 		</dependency>
-		
+
 	</dependencies>
 
 </project>

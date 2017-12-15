@@ -25,14 +25,33 @@ public class Collaborateur {
 
 	private final String SOCIETE = Constantes.SOCIETE;
 
-	public Collaborateur() {
+	/**
+	 * initialisation des valeurs par defauts actif = true dateHeureCreation =
+	 * ZonedDateTime.now() photo = default-avatar.png matricule = un random mixé
+	 * avec le timestamp phone = unknown
+	 */
+	private Collaborateur() {
 		this.actif = true;
 		this.dateHeureCreation = ZonedDateTime.now();
 		this.intitulePoste = "employé";
 		this.photo = "default-avatar.png";
 		// random generated matricule :
 		this.matricule = String.format("%x", (long) (Math.random() * LocalDate.now().toEpochDay())).toUpperCase();
-		this.setPhone("unknown");
+		this.phone = "unknown";
+	}
+
+	/**
+	 * Valorise le nom, le prenom et l'emailPro tel que emailPro =
+	 * prenom.nom@societe.com
+	 * 
+	 * @param nom
+	 * @param prenom
+	 */
+	public Collaborateur(String nom, String prenom) {
+		this();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.emailPro = prenom.toLowerCase() + "." + nom.toLowerCase() + "@" + SOCIETE + ".com";
 	}
 
 	/**
@@ -46,94 +65,151 @@ public class Collaborateur {
 	 */
 	public Collaborateur(String nom, String prenom, LocalDate date_naissance, String adresse, String num_secu_sociale,
 			String initulePoste, Departement departement) {
-		this();
-		this.nom = nom;
-		this.prenom = prenom;
+		this(nom, prenom);
 		this.date_naissance = date_naissance;
 		this.adresse = adresse;
 		this.num_secu_sociale = num_secu_sociale;
 		this.intitulePoste = initulePoste;
 		this.departement = departement;
-		String emailPro = prenom + "." + nom + "@" + SOCIETE + ".com".toLowerCase();
-		setEmailPro(emailPro);
 	}
 
+	/**
+	 * @return le matricule du collaborateur
+	 */
 	public String getMatricule() {
 		return matricule;
 	}
 
+	/**
+	 * @param matricule
+	 */
 	public void setMatricule(String matricule) {
 		this.matricule = matricule;
 	}
 
+	/**
+	 * @return le nom du collaborateur
+	 */
 	public String getNom() {
 		return nom;
 	}
 
+	/**
+	 * @param nom
+	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
+	/**
+	 * @return le prenom du collaborateur
+	 */
 	public String getPrenom() {
 		return prenom;
 	}
 
+	/**
+	 * @param prenom
+	 */
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
 
+	/**
+	 * @return la date de naissance du collaborateur
+	 */
 	public LocalDate getDate_naissance() {
 		return date_naissance;
 	}
 
+	/**
+	 * @param date_naissance
+	 */
 	public void setDate_naissance(LocalDate date_naissance) {
 		this.date_naissance = date_naissance;
 	}
 
+	/**
+	 * @return l'adresse du collaborateur
+	 */
 	public String getAdresse() {
 		return adresse;
 	}
 
+	/**
+	 * @param adresse
+	 */
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
 
+	/**
+	 * @return le numero de secu sociale (15 caractères)
+	 */
 	public String getNum_secu_sociale() {
 		return num_secu_sociale;
 	}
 
+	/**
+	 * @param num_secu_sociale
+	 *            (15 caractères)
+	 */
 	public void setNum_secu_sociale(String num_secu_sociale) {
 		this.num_secu_sociale = num_secu_sociale;
 	}
 
+	/**
+	 * @return emailPro (prenom.nom@societe.com)
+	 */
 	public String getEmailPro() {
 		return emailPro;
 	}
 
+	/**
+	 * @param emailPro
+	 */
 	public void setEmailPro(String emailPro) {
 		this.emailPro = emailPro;
 	}
 
+	/**
+	 * @return le nom de la photo, de la forme : "photoname.extension"
+	 */
 	public String getPhoto() {
 		return photo;
 	}
 
+	/**
+	 * @param photo
+	 */
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
 
+	/**
+	 * @return dateHeureCreation
+	 */
 	public ZonedDateTime getDateHeureCreation() {
 		return dateHeureCreation;
 	}
 
+	/**
+	 * @param dateHeureCreation
+	 */
 	public void setDateHeureCreation(ZonedDateTime dateHeureCreation) {
 		this.dateHeureCreation = dateHeureCreation;
 	}
 
+	/**
+	 * @return if collaborateur is actif or not
+	 */
 	public Boolean isActif() {
 		return actif;
 	}
 
+	/**
+	 * @param actif
+	 */
 	public void setActif(Boolean actif) {
 		this.actif = actif;
 	}

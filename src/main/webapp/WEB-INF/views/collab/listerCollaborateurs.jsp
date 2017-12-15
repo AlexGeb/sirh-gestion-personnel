@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page import="java.util.List"%>
 <%@page import="dev.sgp.entite.Collaborateur"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
@@ -8,8 +9,13 @@
 <body>
 	<%@include file="../includes/navbar.jsp"%>
 	<div class="container-fluid">
-		<h1>Les collaborateurs</h1>
-
+		<div class="d-flex justify-content-center">
+			<ul class="list-inline">
+				<li class="list-inline-item"><h1>Les collaborateurs</h1></li>
+				<li class="list-inline-item"><p class="font-italic">(${ fn:length(collaborateurs)}
+						affichés)</p></li>
+			</ul>
+		</div>
 		<div class="row">
 			<div class="col-lg-4 align-self-center">
 				<p class="text-right">Rechercher un nom ou un prénom commencant
@@ -56,28 +62,31 @@
 		<div class="row">
 			<c:forEach var="collab" items="${collaborateurs}">
 				<div class="col-auto" style="padding-bottom: 10px;">
-					<div class="card" style="max-width: 20rem;">
-						<h4 class="card-header">${collab.nom}&nbsp;${collab.prenom}</h4>
-						<div class="card-body row">
-							<div class="col-3">
-								<img class="rounded img-thumbnail"
-									src="<%=request.getContextPath()%>/images/${collab.photo}"
-									alt="Responsive image">
-							</div>
-							<div class="col-9">
-								<div class="card-text">
-									<ul class="list-unstyled">
-										<li><small>Fonction : <strong>${collab.intitulePoste}</strong></small></li>
-										<li><small>Departement : <strong>${collab.departement.nom}</strong></small></li>
-										<li><small>Email : <strong>${collab.emailPro}</strong></small></li>
-										<li><small>Telephone : <strong>${collab.phone}</strong></small></li>
-									</ul>
+					<div class="container">
+
+						<div class="card" style="max-width: 20rem;">
+							<h4 class="card-header">${collab.nom}&nbsp;${collab.prenom}</h4>
+							<div class="card-body row">
+								<div class="col-3">
+									<img class="rounded img-thumbnail"
+										src="<%=request.getContextPath()%>/images/${collab.photo}"
+										alt="Responsive image">
+								</div>
+								<div class="col-9">
+									<div class="card-text">
+										<ul class="list-unstyled">
+											<li><small>Fonction : <strong>${collab.intitulePoste}</strong></small></li>
+											<li><small>Departement : <strong>${collab.departement.nom}</strong></small></li>
+											<li><small>Email : <strong>${collab.emailPro}</strong></small></li>
+											<li><small>Telephone : <strong>${collab.phone}</strong></small></li>
+										</ul>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="card-footer text-muted">
-							<a href="<c:url value='editer?matricule=${collab.matricule}'/>"
-								class="btn btn-primary" role="button">Modifier</a>
+							<div class="card-footer text-muted">
+								<a href="<c:url value='editer?matricule=${collab.matricule}'/>"
+									class="btn btn-primary" role="button">Modifier</a>
+							</div>
 						</div>
 					</div>
 				</div>

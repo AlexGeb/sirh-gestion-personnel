@@ -33,9 +33,7 @@ public class FormValidator {
 		// champs optionnels
 		for (String key : OPTIONAL_KEYS) {
 			String value = req.getParameter(key);
-			if (value != null && !value.equals("")) {
-				formData.put(key, value);
-			}
+			formData.put(key, value);
 		}
 		return erreurs;
 	}
@@ -52,6 +50,10 @@ public class FormValidator {
 			msg.add(strbuff.toString());
 		});
 		return msg.stream().collect(Collectors.joining(", "));
+	}
+
+	public static boolean isNotNullAndNotEmpty(String str) {
+		return str != null && !str.trim().isEmpty();
 	}
 
 }

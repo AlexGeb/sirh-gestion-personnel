@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import dev.sgp.service.CollaborateurService;
 import dev.sgp.util.Constantes;
 import dev.sgp.util.FormValidator;
 
+@WebServlet(urlPatterns = { "/collaborateurs/editer" })
 public class EditerCollaborateurController extends HttpServlet {
 	private final CollaborateurService collabService = Constantes.COLLAB_SERVICE;
 	private static final Logger LOG = LoggerFactory.getLogger(EditerCollaborateurController.class);

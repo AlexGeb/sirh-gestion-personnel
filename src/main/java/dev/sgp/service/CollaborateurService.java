@@ -48,7 +48,7 @@ public class CollaborateurService {
 	}
 
 	public Collaborateur newCollabFromHashMap(Map<String, String> keyValue) {
-		Collaborateur collab = new Collaborateur();
+		Collaborateur collab = new Collaborateur(keyValue.get("nom"), keyValue.get("prenom"));
 		return modifCollabFromHashMap(collab, keyValue);
 	}
 
@@ -82,35 +82,19 @@ public class CollaborateurService {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		collab.setDate_naissance(LocalDate.parse(keyValue.get("date_naissance"), formatter));
 		collab.setAdresse(keyValue.get("adresse"));
-		collab.setNom(keyValue.get("nom"));
-		collab.setPrenom(keyValue.get("prenom"));
 		collab.setNum_secu_sociale(keyValue.get("num_secu_sociale"));
-		String emailPro = collab.getPrenom() + "." + collab.getNom() + "@" + SOCIETE + ".com";
-		collab.setEmailPro(emailPro);
 
 		// champs optionnels
-		if (keyValue.containsKey("phone")) {
-			collab.setPhone(keyValue.get("phone"));
-		}
-		if (keyValue.containsKey("intitulePoste")) {
-			collab.setIntitulePoste(keyValue.get("intitulePoste"));
-		}
-		if (keyValue.containsKey("departement")) {
-			String deptname = keyValue.get("departement");
-			Optional<Departement> deptOpt = Constantes.DEPT_SERVICE.getDeptByName(deptname);
-			if(deptOpt.isPresent()) {
-				Departement dept = deptOpt.get();
-				collab.setDepartement(dept);
-			}
-		}
-		if (keyValue.containsKey("banque")) {
-			collab.setBanque(keyValue.get("banque"));
-		}
-		if (keyValue.containsKey("bic")) {
-			collab.setBic(keyValue.get("bic"));
-		}
-		if (keyValue.containsKey("iban")) {
-			collab.setIban(keyValue.get("iban"));
+		collab.setPhone(keyValue.get("phone"));
+		collab.setIntitulePoste(keyValue.get("intitulePoste"));
+		collab.setBanque(keyValue.get("banque"));
+		collab.setBic(keyValue.get("bic"));
+		collab.setIban(keyValue.get("iban"));
+		String deptname = keyValue.get("departement");
+
+		Optional<Departement> deptOpt = Constantes.DEPT_SERVICE.getDeptByName(deptname);
+		if (deptOpt.isPresent()) {
+			collab.setDepartement(deptOpt.get());
 		}
 		return collab;
 	}
