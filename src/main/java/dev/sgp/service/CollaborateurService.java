@@ -8,11 +8,15 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import dev.sgp.entite.Collaborateur;
 import dev.sgp.entite.Departement;
 import dev.sgp.util.Constantes;
 
 public class CollaborateurService {
+	private static final Logger LOG = LoggerFactory.getLogger(CollaborateurService.class);
 
 	private List<Collaborateur> listeCollaborateurs = new ArrayList<>();
 
@@ -24,10 +28,13 @@ public class CollaborateurService {
 		listeCollaborateurs.add(collab);
 	}
 
-
 	public Collaborateur newCollabFromHashMap(Map<String, String> keyValue) {
-		Collaborateur collab = new Collaborateur(keyValue.get("nom"), keyValue.get("prenom"));
-		return modifCollabFromHashMap(collab, keyValue);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate date_naissance = LocalDate.parse(keyValue.get("date_naissance"), formatter);
+		Collaborateur collab = new Collaborateur(keyValue.get("nom"), keyValue.get("prenom"), date_naissance,
+				keyValue.get("adresse"), keyValue.get("num_secu_sociale"), keyValue.get("phone"));
+		LOG.debug("nouveau collaborateur " + keyValue.get("num_secu_sociale"));
+		return collab;
 	}
 
 	public List<Collaborateur> queryByName(String recherche) {
@@ -39,9 +46,9 @@ public class CollaborateurService {
 
 	public List<Collaborateur> queryByDept(String nom_dept) {
 		return listeCollaborateurs.stream().filter(collab -> {
-			return collab.getDepartement().getNom().equals(nom_dept.trim());
+			return collab.getDepartement()!=null && collab.getDepartement().getNom().equals(nom_dept);
 		}).collect(Collectors.toList());
-	}
+	} 
 
 	public Optional<Collaborateur> queryByMatricule(String matricule) {
 		return listeCollaborateurs.stream().filter(collab -> collab.getMatricule().equals(matricule)).findFirst();
@@ -56,20 +63,14 @@ public class CollaborateurService {
 	}
 
 	public Collaborateur modifCollabFromHashMap(Collaborateur collab, Map<String, String> keyValue) {
-		// champs obligatoires
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		collab.setDate_naissance(LocalDate.parse(keyValue.get("date_naissance"), formatter));
-		collab.setAdresse(keyValue.get("adresse"));
-		collab.setNum_secu_sociale(keyValue.get("num_secu_sociale"));
-
 		// champs optionnels
 		collab.setPhone(keyValue.get("phone"));
+		collab.setAdresse(keyValue.get("adresse"));
 		collab.setIntitulePoste(keyValue.get("intitulePoste"));
 		collab.setBanque(keyValue.get("banque"));
 		collab.setBic(keyValue.get("bic"));
 		collab.setIban(keyValue.get("iban"));
 		String deptname = keyValue.get("departement");
-
 		Optional<Departement> deptOpt = Constantes.DEPT_SERVICE.getDeptByName(deptname);
 		if (deptOpt.isPresent()) {
 			collab.setDepartement(deptOpt.get());

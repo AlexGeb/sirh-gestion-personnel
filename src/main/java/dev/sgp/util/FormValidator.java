@@ -10,35 +10,36 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
 public class FormValidator {
-	public final List<String> KEYS = Arrays.asList("nom", "prenom", "date_naissance", "adresse", "num_secu_sociale");
-	public final List<String> OPTIONAL_KEYS = Arrays.asList("phone", "intitulePoste", "departement", "banque", "bic",
-			"iban");
+	private List<String> keys;
+	private HttpServletRequest req;
 
-	private Map<String, String> formData = new HashMap<>();
+	public FormValidator(List<String> keys, HttpServletRequest req) {
+		this.keys = keys;
+		this.req = req;
+	}
+
+	private Map<String, String> formData = new HashMap<>(11);
 
 	public Map<String, String> getFormData() {
 		return formData;
 	}
 
-	public List<String> validate(HttpServletRequest req) {
+	public List<String> validate() {
 		List<String> erreurs = new ArrayList<>();
 		// champs obligatoires
-		for (String key : KEYS) {
+		for (String key : keys) {
 			String value = req.getParameter(key);
 			if (value == null || value.equals("")) {
 				erreurs.add(key);
 			} else if (key.equals("num_secu_sociale")) {
 				if (value.length() != 15) {
 					erreurs.add(key);
+				} else {
+					formData.put(key, value);
 				}
 			} else {
 				formData.put(key, value);
 			}
-		}
-		// champs optionnels
-		for (String key : OPTIONAL_KEYS) {
-			String value = req.getParameter(key);
-			formData.put(key, value);
 		}
 		return erreurs;
 	}
@@ -60,5 +61,4 @@ public class FormValidator {
 	public static boolean isNotNullAndNotEmpty(String str) {
 		return str != null && !str.trim().isEmpty();
 	}
-
 }

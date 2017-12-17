@@ -64,11 +64,14 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="dept" class="col-sm-3 col-form-label">Département</label>
-										<div class="col-sm-9">
-											<input name="departement" type="text" class="form-control"
-												id="dept" placeholder="Département"
-												value="${collaborateur.departement.nom}">
+									<label for="dept" class="col-sm-3 col-form-label">Département</label>
+									<div class="col-sm-9">
+										<select name="departement">
+											<c:forEach var="dept" items="${departements}">
+												<option value="${dept.nom}"
+													${dept.nom == collaborateur.departement.nom ? 'selected="selected"' : ''}>${dept.nom}</option>
+											</c:forEach>
+										</select>
 										</div>
 									</div>
 								</div>

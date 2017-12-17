@@ -1,6 +1,7 @@
 package dev.sgp.web;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,8 +32,9 @@ public class NouveauCollaborateurController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		FormValidator validator = new FormValidator();
-		List<String> itemManquants = validator.validate(req);
+		List<String> keys = Arrays.asList("nom", "prenom", "date_naissance", "adresse", "num_secu_sociale", "phone");
+		FormValidator validator = new FormValidator(keys, req);
+		List<String> itemManquants = validator.validate();
 		Map<String, String> keyValue = validator.getFormData();
 		if (itemManquants.isEmpty()) {
 			Collaborateur collab = collabService.newCollabFromHashMap(keyValue);

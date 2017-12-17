@@ -47,7 +47,7 @@ public class Collaborateur {
 	 * @param nom
 	 * @param prenom
 	 */
-	public Collaborateur(String nom, String prenom) {
+	private Collaborateur(String nom, String prenom) {
 		this();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -64,13 +64,12 @@ public class Collaborateur {
 	 * @param departement
 	 */
 	public Collaborateur(String nom, String prenom, LocalDate date_naissance, String adresse, String num_secu_sociale,
-			String initulePoste, Departement departement) {
+			String phone) {
 		this(nom, prenom);
 		this.date_naissance = date_naissance;
 		this.adresse = adresse;
 		this.num_secu_sociale = num_secu_sociale;
-		this.intitulePoste = initulePoste;
-		this.departement = departement;
+		this.phone = phone;
 	}
 
 	/**

@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import dev.sgp.entite.VisiteWeb;
 import dev.sgp.service.FrequentationService;
 import dev.sgp.util.Constantes;
-import dev.sgp.web.EditerCollaborateurController;
 
 @WebFilter(urlPatterns = { "/*" })
 public class FrequentationFilter implements Filter {
